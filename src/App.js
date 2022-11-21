@@ -1,25 +1,22 @@
-import logo from './logo.svg';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-
+import { usersThunk } from './service/slicers/placeholderSlice';
+import { clear, decrease, increase } from './service/slicers/sliceCount';
 function App() {
+  const {count} = useSelector(state => state.count)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(usersThunk())
+  },[dispatch])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>count: {count}</p>
+      <button onClick={() => dispatch(increase())}>+</button>
+      <button onClick={() => dispatch(decrease())}>-</button>
+      <button onClick={() => dispatch(clear())}>clear</button>
     </div>
-  );
+  )
 }
 
 export default App;
